@@ -1,18 +1,17 @@
 import styled from "styled-components";
-// import filme1 from "./Images/A-Menina-Que-Roubava-Livros-capa-filme-1.jpg";
-import React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Menu() {
-    const [catalog, setCatalog] = React.useState([]);
+    const [catalog, setCatalog] = useState([]);
 
     function request() {
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
         promise.then(response => setCatalog(response.data));
     }
 
-    React.useEffect(request, []);
+    useEffect(request, []);
 
     function Movie(props) {
         return (

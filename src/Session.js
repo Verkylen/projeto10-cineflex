@@ -1,33 +1,40 @@
 import styled from "styled-components";
-import filme1 from "./Images/A-Menina-Que-Roubava-Livros-capa-filme-1.jpg";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Session() {
+    const {sessionID} = useParams();
+    const [data, setData] = useState({});
+    const [day, setDay] = useState({});
+    const [movie, setMovie] = useState({});
+    const [seats, setSeats] = useState([]);
+
+    function request() {
+        const URL = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionID}/seats`;
+        const promise = axios.get(URL);
+        promise.then(response => {
+            console.log(response.data);
+            setData(response.data);
+            setDay(response.data.day);
+            setMovie(response.data.movie);
+            setSeats(response.data.seats);
+        });
+    }
+
+    useEffect(request, [sessionID]);
+
+    function Seat({id, name, isAvailable}) {
+        return (
+            <li key={id}>{name}</li>
+        );
+    }
+
     return (
         <SessionStyle>
             <h3>Selecione o(s) assento(s)</h3>
             <ul>
-                <li>01</li>
-                <li>02</li>
-                <li>03</li>
-                <li>04</li>
-                <li>05</li>
-                <li>06</li>
-                <li>07</li>
-                <li>08</li>
-                <li>09</li>
-                <li>10</li>
-            </ul>
-            <ul>
-                <li>01</li>
-                <li>02</li>
-                <li>03</li>
-                <li>04</li>
-                <li>05</li>
-                <li>06</li>
-                <li>07</li>
-                <li>08</li>
-                <li>09</li>
-                <li>10</li>
+                {seats.map(Seat)}
             </ul>
             <div>
                 <div>
@@ -53,11 +60,11 @@ export default function Session() {
             <footer>
                 <div>
                     <div>
-                        <img src={filme1} alt="A menina que roubava livros"/>
+                        <img src={movie.posterURL} alt="A menina que roubava livros"/>
                     </div>
                     <div>
-                        <h2>Enola Holmes</h2>
-                        <h2>Quinta-feira - 15:00</h2>
+                        <h2>{movie.title}</h2>
+                        <h2>{day.weekday} - {data.name}</h2>
                     </div>
                 </div>
             </footer>
@@ -84,13 +91,13 @@ const SessionStyle = styled.div`
     }
 
     ul {
-        width: 327px;
+        width: 334px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
 
         li {
-            margin-bottom: 18px;
+            margin: 0 3.5px 18px 3.5px;
             width: 26px;
             height: 26px;
             border-radius: 50%;

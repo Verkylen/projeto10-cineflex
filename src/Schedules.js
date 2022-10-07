@@ -1,33 +1,52 @@
 import styled from "styled-components";
-import filme1 from "./Images/A-Menina-Que-Roubava-Livros-capa-filme-1.jpg";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Schedules() {
+    const {movieID} = useParams();
+    const [data, setData] = useState({});
+    const [days, setDays] = useState([]);
+
+    function request() {
+        const URL = `https://mock-api.driven.com.br/api/v5/cineflex/movies/${movieID}/showtimes`;
+        const promise = axios.get(URL);
+        promise.then(response => {setData(response.data); setDays(response.data.days);});
+    }
+
+    useEffect(request, [movieID]);
+
+    function Day({weekday, date, showtimes, id}) {
+        function Time({name, id}) {
+            return (
+                <Link to={`/sessao/${id}`} key={id}>
+                    <button>{name}</button>
+                </Link>
+            );
+        }
+
+        return (
+            <div key={id}>
+                <h4>{weekday} - {date}</h4>
+                <div>
+                    {showtimes.map(Time)}
+                </div>
+            </div>
+        );
+    }
+
     return (
         <SchedulesContainer>
             <h3>Selecione o horário</h3>
 
-            <div>
-                <h4>Quinta-feira - 24/06/2021</h4>
-                <div>
-                    <button>15:00</button>
-                    <button>19:00</button>
-                </div>
-            </div>
-            
-            <div>
-                <h4>Sexta-feira - 25/06/2021</h4>
-                <div>
-                    <button>15:00</button>
-                    <button>19:00</button>
-                </div>
-            </div>
+            {days.map(Day)}
 
             <footer>
                 <div>
                     <div>
-                        <img src={filme1} alt="A menina que roubava livros"/>
+                        <img src={data.posterURL} alt={data.title}/>
                     </div>
-                    <h2>A menina que roubava livros</h2>
+                    <h2>{data.title}</h2>
                 </div>
             </footer>
         </SchedulesContainer>
