@@ -36,6 +36,7 @@ export default function Schedules() {
 
 const SchedulesContainer = styled.div`
     margin-top: 67px;
+    margin-bottom: 142px;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 // import filme1 from "./Images/A-Menina-Que-Roubava-Livros-capa-filme-1.jpg";
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Menu() {
     const [catalog, setCatalog] = React.useState([]);
@@ -16,7 +17,9 @@ export default function Menu() {
     function Movie(props) {
         return (
             <li key={props.id}>
-                <img src={props.posterURL} alt={props.title}/>
+                <Link to={`/filme/${props.id}`}>
+                    <img src={props.posterURL} alt={props.title}/>
+                </Link>
             </li>
         );
     }

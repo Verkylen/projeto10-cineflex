@@ -44,10 +44,10 @@ export default function Session() {
                 </div>
             </div>
             <form>
-                <label>Nome do comprador:</label>
-                <input placeholder="Digite seu nome..." type="text"></input>
-                <label>CPF do comprador:</label>
-                <input placeholder="Digite seu CPF..." type="text"></input>
+                <label htmlFor='name'>Nome do comprador:</label>
+                <input placeholder="Digite seu nome..." type="text" id='name'/>
+                <label htmlFor='CPF'>CPF do comprador:</label>
+                <input placeholder="Digite seu CPF..." type="text" id='CPF'/>
             </form>
             <button>Reservar assento(s)</button>
             <footer>
@@ -67,6 +67,7 @@ export default function Session() {
 
 const SessionStyle = styled.div`
     margin-top: 67px;
+    margin-bottom: 142px;
     display: flex;
     flex-direction: column;
     align-items: center;
