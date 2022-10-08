@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Seats from "./Seats";
 
 export default function Session() {
     const {sessionID} = useParams();
@@ -24,17 +25,11 @@ export default function Session() {
 
     useEffect(request, [sessionID]);
 
-    function Seat({id, name, isAvailable}) {
-        return (
-            <li key={id}>{name}</li>
-        );
-    }
-
     return (
         <SessionStyle>
             <h3>Selecione o(s) assento(s)</h3>
             <ul>
-                {seats.map(Seat)}
+                <Seats seats={seats}/>
             </ul>
             <div>
                 <div>
@@ -60,7 +55,7 @@ export default function Session() {
             <footer>
                 <div>
                     <div>
-                        <img src={movie.posterURL} alt="A menina que roubava livros"/>
+                        <img src={movie.posterURL} alt={movie.title}/>
                     </div>
                     <div>
                         <h2>{movie.title}</h2>
@@ -95,23 +90,6 @@ const SessionStyle = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-
-        li {
-            margin: 0 3.5px 18px 3.5px;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background-color: #C3CFD9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
-            font-size: 11px;
-            line-height: 13px;
-            letter-spacing: 0.04px;
-            color: #000000;
-        }
     }
 
     &>div {
@@ -130,7 +108,7 @@ const SessionStyle = styled.div`
                 margin-bottom: 5px;
                 width: 25px;
                 height: 25px;
-                border: 1px solid #0E7D71;
+                border: 1px solid;
                 border-radius: 17px;
             }
 
@@ -146,21 +124,21 @@ const SessionStyle = styled.div`
 
         &>div:nth-of-type(1) {
             div {
-                border: 1px solid #0E7D71;
+                border-color: #0E7D71;
                 background-color: #1AAE9E;
             }
         }
 
         &>div:nth-of-type(2) {
             div {
-                border: 1px solid #7B8B99;
+                border-color: #7B8B99;
                 background-color: #C3CFD9;
             }
         }
 
         &>div:nth-of-type(3) {
             div {
-                border: 1px solid #F7C52B;
+                border-color: #F7C52B;
                 background-color: #FBE192;
             }
         }
