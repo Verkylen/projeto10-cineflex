@@ -15,7 +15,7 @@ export default function Menu({setMovieName}) {
 
     function Movie(props) {
         return (
-            <li key={props.id}>
+            <li key={props.id} data-identifier="movie-outdoor">
                 <Link to={`/filme/${props.id}`}>
                     <img onClick={() => setMovieName(props.title)}
                          src={props.posterURL}

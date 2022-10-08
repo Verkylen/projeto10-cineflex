@@ -8,16 +8,20 @@ export default function Submit({setInputName, setInputCPF, submitData}) {
                    onChange={e => setInputName(e.target.value)}
                    placeholder="Digite seu nome..."
                    type="text"
-                   id='name'/>
+                   id='name'
+                   data-identifier="buyer-name-input"/>
 
             <label htmlFor='CPF'>CPF do comprador:</label>
             <input required
                    onChange={e => setInputCPF(e.target.value)}
                    placeholder="Digite seu CPF..."
                    type="text"
-                   id='CPF'/>
+                   id='CPF'
+                   data-identifier="buyer-cpf-input"/>
                    
-            <input type='submit' value='Reservar assento(s)'/>
+            <input type='submit'
+                   value='Reservar assento(s)'
+                   data-identifier="reservation-btn"/>
         </Form>
     );
 };

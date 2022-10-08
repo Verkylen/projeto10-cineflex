@@ -47,15 +47,15 @@ export default function Session({chosenID, setChosenID, inputName, setInputName,
                    setChosenID={setChosenID}/>
 
             <div>
-                <div>
+                <div data-identifier="seat-selected-subtitle">
                     <div></div>
                     <span>Selecionado</span>
                 </div>
-                <div>
+                <div data-identifier="seat-available-subtitle">
                     <div></div>
                     <span>Disponível</span>
                 </div>
-                <div>
+                <div data-identifier="seat-unavailable-subtitle">
                     <div></div>
                     <span>Indisponível</span>
                 </div>
@@ -70,7 +70,7 @@ export default function Session({chosenID, setChosenID, inputName, setInputName,
                     <div>
                         <img src={movie.posterURL} alt={movie.title}/>
                     </div>
-                    <div>
+                    <div data-identifier="movie-and-session-infos-preview">
                         <h2>{movie.title}</h2>
                         <h2>{day.weekday} - {data.name}</h2>
                     </div>

@@ -24,7 +24,7 @@ export default function App() {
                     <Route path='/' element={<Menu setMovieName={setMovieName}/>}/>
                     <Route path='/filme/:movieID' element={<Schedules setMovieDate={setMovieDate} setTime={setTime}/>}/>
                     <Route path='/sessao/:sessionID' element={<Session chosenID={chosenID} setChosenID={setChosenID} inputName={inputName} setInputName={setInputName} inputCPF={inputCPF} setInputCPF={setInputCPF}/>}/>
-                    <Route path='sucesso' element={<Sucess movieName={movieName} movieDate={movieDate} time={time} chosenID={chosenID} setChosenID={setChosenID} inputName={inputName} inputCPF={inputCPF}/>}/>
+                    <Route path='/sucesso' element={<Sucess movieName={movieName} movieDate={movieDate} time={time} chosenID={chosenID} setChosenID={setChosenID} inputName={inputName} inputCPF={inputCPF}/>}/>
                 </Routes>
             </BrowserRouter>
         </>

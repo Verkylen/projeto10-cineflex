@@ -36,7 +36,8 @@ export default function Seats({seats, chosenID, setChosenID}) {
         return (
             <Li onClick={() => Select(id, isAvailable)}
                         newColor={newColor}
-                        key={id}>
+                        key={id}
+                        data-identifier="seat">
                 {name}
             </Li>
         );

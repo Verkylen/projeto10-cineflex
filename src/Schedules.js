@@ -21,14 +21,14 @@ export default function Schedules({setMovieDate, setTime}) {
         function Time({name, id}) {
             return (
                 <Link to={`/sessao/${id}`} key={id}>
-                    <button onClick={() => {setMovieDate(date); setTime(name);}}>{name}</button>
+                    <button onClick={() => {setMovieDate(date); setTime(name);}} data-identifier="hour-minute-btn">{name}</button>
                 </Link>
             );
         }
 
         return (
             <div key={id}>
-                <h4>{weekday} - {date}</h4>
+                <h4 data-identifier="session-date">{weekday} - {date}</h4>
                 <div>
                     {showtimes.map(Time)}
                 </div>
@@ -44,10 +44,10 @@ export default function Schedules({setMovieDate, setTime}) {
 
             <footer>
                 <div>
-                    <div>
+                    <div data-identifier="movie-img-preview">
                         <img src={data.posterURL} alt={data.title}/>
                     </div>
-                    <h2>{data.title}</h2>
+                    <h2 data-identifier="movie-and-session-infos-preview">{data.title}</h2>
                 </div>
             </footer>
         </SchedulesContainer>
