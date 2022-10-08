@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function Schedules() {
+export default function Schedules({setMovieDate, setTime}) {
     const {movieID} = useParams();
     const [data, setData] = useState({});
     const [days, setDays] = useState([]);
@@ -17,10 +17,11 @@ export default function Schedules() {
     useEffect(request, [movieID]);
 
     function Day({weekday, date, showtimes, id}) {
+
         function Time({name, id}) {
             return (
                 <Link to={`/sessao/${id}`} key={id}>
-                    <button>{name}</button>
+                    <button onClick={() => {setMovieDate(date); setTime(name);}}>{name}</button>
                 </Link>
             );
         }

@@ -1,25 +1,39 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export default function Sucess() {
+export default function Sucess({movieName, movieDate, time, chosenID, setChosenID, inputName, inputCPF}) {
+
+    function showSeat(id) {
+        if ((Number(id)%50).toString().length !== 1) {
+            return (Number(id)%50).toString();
+        } else {
+            return '0' + (Number(id)%50).toString();
+        }
+    }
+
     return (
         <SucessStyle>
-            <h2>Pedido feito com sucesso!</h2>
+            <h2>
+                Pedido feito<br/>
+                com sucesso!
+            </h2>
             <div>
                 <h3>Filme e sessão</h3>
-                <p>Enola Holmes</p>
-                <p>24/06/2021 15:00</p>
+                <p>{movieName}</p>
+                <p>{movieDate} {time}</p>
             </div>
             <div>
                 <h3>Ingressos</h3>
-                <p>Assento 15</p>
-                <p>Assento 16</p>
+                {chosenID.map(id => <p key={id}>Assento {showSeat(id)}</p>)}
             </div>
             <div>
                 <h3>Comprador</h3>
-                <p>Nome: João da Silva Sauro</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {inputName}</p>
+                <p>CPF: {inputCPF}</p>
             </div>
-            <button>Voltar pra Home</button>
+            <Link to='/'>
+                <button onClick={() => setChosenID([])}>Voltar pra Home</button>
+            </Link>
         </SucessStyle>
     );
 }
@@ -63,7 +77,7 @@ const SucessStyle = styled.div`
             color: #293845;
         }
 
-        p:nth-of-type(2) {
+        p:last-of-type {
             margin-bottom: 25px;
         }
     }

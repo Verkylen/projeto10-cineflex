@@ -1,19 +1,18 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Seats from "./Seats";
 import Submit from "./Submit";
 
-export default function Session() {
+export default function Session({chosenID, setChosenID, inputName, setInputName, inputCPF, setInputCPF}) {
     const {sessionID} = useParams();
     const [data, setData] = useState({});
     const [day, setDay] = useState({});
     const [movie, setMovie] = useState({});
     const [seats, setSeats] = useState([]);
-    const [chosenID, setChosenID] = useState([]);
-    const [inputName, setInputName] = useState('');
-    const [inputCPF, setInputCPF] = useState('');
+
+    const navigate = useNavigate();
 
     function request() {
         const URL = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionID}/seats`;
@@ -30,10 +29,13 @@ export default function Session() {
 
     function submitData(e) {
         e.preventDefault();
-        
-        const URL = 'https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many';
-        const request = axios.post(URL, {ids: chosenID, name: inputName, cpf: inputCPF});
-        console.log(request);
+        if (chosenID.length !== 0) {
+            const URL = 'https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many';
+            const promise = axios.post(URL, {ids: chosenID, name: inputName, cpf: inputCPF});
+            promise.then(() => navigate('/sucesso'));
+        } else {
+            alert('Por favor, escolha seu(s) assento(s) ou retorne e selecione outro horário de exibição.');
+        }
     }
 
     return (

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Menu() {
+export default function Menu({setMovieName}) {
     const [catalog, setCatalog] = useState([]);
 
     function request() {
@@ -17,7 +17,9 @@ export default function Menu() {
         return (
             <li key={props.id}>
                 <Link to={`/filme/${props.id}`}>
-                    <img src={props.posterURL} alt={props.title}/>
+                    <img onClick={() => setMovieName(props.title)}
+                         src={props.posterURL}
+                         alt={props.title}/>
                 </Link>
             </li>
         );
