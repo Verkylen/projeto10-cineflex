@@ -1,20 +1,18 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Seats({seats}) {
+export default function Seats({seats, chosenID, setChosenID}) {
 
     function Seat({id, name, isAvailable}) {
         const inputBgc = (isAvailable)? '#C3CFD9': '#FBE192';
         const [bgcState, setBgcState] = useState(inputBgc);
         let backgroundColor = bgcState;
 
-        function Select(available) {
+        function Select(clickedID, available) {
             if (available) {
-                console.log('Available');
                 setBgcState('#1AAE9E');
+                setChosenID([...chosenID, clickedID]);
             } else {
-                console.log('Unavailable');
-                setBgcState('red');
                 alert('Esse assento não está disponível');
             }
         }
@@ -24,22 +22,29 @@ export default function Seats({seats}) {
         }
 
         return (
-        <SeatButton onClick={() => Select(isAvailable)}
-                    backgroundColor={backgroundColor}
-                    key={id}>
-            {name}
-        </SeatButton>
+            <Li onClick={() => Select(id, isAvailable)}
+                        backgroundColor={backgroundColor}
+                        key={id}>
+                {name}
+            </Li>
         );
     }
 
     return (
-        <>
+        <Ul>
             {seats.map(Seat)}
-        </>
+        </Ul>
     );
 }
 
-const SeatButton = styled.li`
+const Ul = styled.ul`
+    width: 334px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
+
+const Li = styled.li`
     margin: 0 3.5px 18px 3.5px;
     width: 26px;
     height: 26px;
@@ -54,4 +59,4 @@ const SeatButton = styled.li`
     line-height: 13px;
     letter-spacing: 0.04px;
     color: #000000;
-`
+`;

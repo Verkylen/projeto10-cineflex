@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Seats from "./Seats";
+import Submit from "./Submit";
 
 export default function Session() {
     const {sessionID} = useParams();
@@ -10,12 +11,14 @@ export default function Session() {
     const [day, setDay] = useState({});
     const [movie, setMovie] = useState({});
     const [seats, setSeats] = useState([]);
+    const [chosenID, setChosenID] = useState([]);
+    const [inputName, setInputName] = useState('');
+    const [inputCPF, setInputCPF] = useState('');
 
     function request() {
         const URL = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionID}/seats`;
         const promise = axios.get(URL);
         promise.then(response => {
-            console.log(response.data);
             setData(response.data);
             setDay(response.data.day);
             setMovie(response.data.movie);
@@ -25,12 +28,22 @@ export default function Session() {
 
     useEffect(request, [sessionID]);
 
+    function submitData(e) {
+        e.preventDefault();
+        
+        const URL = 'https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many';
+        const request = axios.post(URL, {ids: chosenID, name: inputName, cpf: inputCPF});
+        console.log(request);
+    }
+
     return (
         <SessionStyle>
             <h3>Selecione o(s) assento(s)</h3>
-            <ul>
-                <Seats seats={seats}/>
-            </ul>
+
+            <Seats seats={seats}
+                   chosenID={chosenID}
+                   setChosenID={setChosenID}/>
+
             <div>
                 <div>
                     <div></div>
@@ -45,13 +58,11 @@ export default function Session() {
                     <span>Indisponível</span>
                 </div>
             </div>
-            <form>
-                <label htmlFor='name'>Nome do comprador:</label>
-                <input placeholder="Digite seu nome..." type="text" id='name'/>
-                <label htmlFor='CPF'>CPF do comprador:</label>
-                <input placeholder="Digite seu CPF..." type="text" id='CPF'/>
-            </form>
-            <button>Reservar assento(s)</button>
+
+            <Submit setInputName={setInputName}
+                    setInputCPF={setInputCPF}
+                    submitData={submitData}/>
+
             <footer>
                 <div>
                     <div>
@@ -83,13 +94,6 @@ const SessionStyle = styled.div`
         line-height: 28px;
         letter-spacing: 0.04px;
         color: #293845;
-    }
-
-    ul {
-        width: 334px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
     }
 
     &>div {
@@ -142,63 +146,6 @@ const SessionStyle = styled.div`
                 background-color: #FBE192;
             }
         }
-    }
-
-    form {
-        width: 327px;
-        display: flex;
-        flex-direction: column;
-
-        label {
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 21px;
-            color: #293845;
-        }
-
-        input {
-            margin-bottom: 7px;
-            width: 100%;
-            height: 51px;
-            border: 1px solid #D5D5D5;
-            border-radius: 3px;
-            padding-left: 18px;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 21px;
-            color: #293845;
-
-            &::placeholder {
-                margin-left: 18px;
-                font-family: 'Roboto';
-                font-style: italic;
-                font-weight: 400;
-                font-size: 18px;
-                line-height: 21px;
-                color: #AFAFAF;
-            }
-
-            &:focus {
-                outline: 0;
-            }
-        }
-    }
-
-    button {
-        margin-top: 50px;
-        width: 225px;
-        height: 42px;
-        background-color: #E8833A;
-        border: none;
-        border-radius: 3px;
-        font-family: 'Roboto';
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        letter-spacing: 0.04px;
-        color: #FFFFFF;
     }
 
     footer {
