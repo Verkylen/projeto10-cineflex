@@ -5,6 +5,8 @@ export default function Submit({setInputName, setInputCPF, submitData}) {
         <Form onSubmit={submitData}>
             <label htmlFor='name'>Nome do comprador:</label>
             <input required
+                   pattern="[A-Za-zàâãçéêèíóôõúü ]+$"
+                   title="Apenas letras Aa~Zz são permitidas neste campo."
                    onChange={e => setInputName(e.target.value)}
                    placeholder="Digite seu nome..."
                    type="text"
@@ -13,6 +15,9 @@ export default function Submit({setInputName, setInputCPF, submitData}) {
 
             <label htmlFor='CPF'>CPF do comprador:</label>
             <input required
+                   pattern="[0-9]{11}"
+                   maxLength="11"
+                   title="Por favor, insira onze dígitos numéricos."
                    onChange={e => setInputCPF(e.target.value)}
                    placeholder="Digite seu CPF..."
                    type="text"
